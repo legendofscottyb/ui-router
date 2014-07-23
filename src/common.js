@@ -8,8 +8,21 @@ var isDefined = angular.isDefined,
     isObject = angular.isObject,
     isArray = angular.isArray,
     forEach = angular.forEach,
-    extend = angular.extend,
-    copy = angular.copy;
+    extend = angular.extend;
+
+function copy(src, dst) {
+    var key;
+    for (key in dst) {
+        if (dst.hasOwnProperty(key)) {
+            delete dst[key];
+        }
+    }
+    for (key in src) {
+        if (src.hasOwnProperty(key) && key.substr(0, 2) !== '$$') {
+            dst[key] = src[key];
+        }
+    }
+}
 
 function inherit(parent, extra) {
   return extend(new (extend(function() {}, { prototype: parent }))(), extra);
